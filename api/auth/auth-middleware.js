@@ -10,7 +10,16 @@ const checkInfo = (req, res, next) => {
    }
 }
 
+const checkUsername =  (req, res, next) => {
+   const user = Users.getBy({username: req.body.username})
+   if(user.length > 0) {
+      res.json({message: 'username taken'})
+   } else {
+      next()
+   }
+}
 
 module.exports = {
    checkInfo,
+   checkUsername,
 }
