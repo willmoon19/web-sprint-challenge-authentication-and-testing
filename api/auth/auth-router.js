@@ -4,9 +4,10 @@ const bcrypt = require('bcryptjs');
 const tokenBuilder = require('./token-builder')
 const {
   checkInfo,
+  checkUsername,
 } = require('./auth-middleware')
 
-router.post('/register', checkInfo, (req, res, next) => {
+router.post('/register', checkInfo, checkUsername, (req, res, next) => {
   const { username, password } = req.body
   const hash = bcrypt.hashSync(password, 8)
   Users.addUser({ username, password: hash })

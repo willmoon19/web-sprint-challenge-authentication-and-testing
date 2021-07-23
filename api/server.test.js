@@ -2,10 +2,6 @@ const db = require('../data/dbConfig')
 const server = require('./server')
 const request = require('supertest')
 
-const user1 = { username: 'naruto', password: 'uzumaki'}
-const user2 = { username: 'sasuke', password: 'uchiha'}
-const user3 = { username: 'sakura', password: 'saruno'}
-
 beforeAll(async () => {
   await db.migrate.rollback()
   await db.migrate.latest()
@@ -25,7 +21,10 @@ describe('tests the post routes', () => {
       expect(res.status).toBe(304)
     })
     test('adds a user', async () => {
-      await request(server).post('/api/auth/register').send(user1)
+      await request(server).post('/api/auth/register').send({
+         username: 'naruto',
+         password: 'uzumaki'
+        })
       const users = await db('users')
       expect(users).toHaveLength(1)
     })
