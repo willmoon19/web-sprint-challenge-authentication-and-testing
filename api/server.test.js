@@ -29,4 +29,10 @@ describe('tests the post routes', () => {
       expect(users).toHaveLength(1)
     })
   })
+  describe('tests post login works properly', () => {
+    it('fails when there is nothing sent', async () => {
+      const res = await request(server).post('/api/auth/login')
+      expect(res.status).toBe(304)
+    })
+  })
 })

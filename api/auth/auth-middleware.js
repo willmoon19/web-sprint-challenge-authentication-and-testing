@@ -19,7 +19,22 @@ const checkUsername =  (req, res, next) => {
    }
 }
 
+const checkUsernameExists =  async (req, res, next) => {
+   try {
+     const user = await Users.getBy({username: req.body.username})
+     if(!user) {
+       next({status: 304, message: "Invalid credentials"})
+     } else {
+       req.user = user
+       next()
+     }
+   } catch(err) {
+     next(err)
+   }
+}
+
 module.exports = {
    checkInfo,
    checkUsername,
+   checkUsernameExists
 }
